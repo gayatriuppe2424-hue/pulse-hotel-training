@@ -1,0 +1,431 @@
+:root {
+    --bg-charcoal: #121418;
+    --card-bg: rgba(26, 29, 36, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-main: #FFFFFF;
+    --text-muted: #9CA3AF;
+    --accent-red: #FF4D4D;
+    --accent-red-hover: #ff3333;
+    --accent-green: #4CAF50;
+    --accent-green-hover: #45a049;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-main);
+    background-color: var(--bg-charcoal);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Photorealistic Background */
+.bg-image {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* High-res realistic dark modern hotel lobby background via Unsplash source */
+    background: linear-gradient(to bottom, rgba(18, 20, 24, 0.85), rgba(18, 20, 24, 0.95)), 
+                url('https://images.unsplash.com/photo-1542314831-c6a4d14d8835?q=80&w=2670&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(4px);
+    transform: scale(1.05); /* Prevents blurred edges from showing container bg */
+    animation: slowPan 30s infinite alternate ease-in-out;
+}
+
+@keyframes slowPan {
+    from { transform: scale(1.05) translateY(0px); }
+    to { transform: scale(1.05) translateY(-20px); }
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-red);
+}
+
+.pulse-logo {
+    width: 28px;
+    height: 28px;
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+.pulse-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-main);
+}
+
+.safety-score-badge {
+    background: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.1);
+}
+
+.score-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.score-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-green);
+    display: flex;
+    align-items: baseline;
+}
+
+.score-percent {
+    font-size: 1rem;
+    margin-left: 2px;
+}
+
+.profile-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.profile-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Hero Section */
+.hero-card {
+    background: linear-gradient(135deg, rgba(255, 77, 77, 0.1), rgba(26, 29, 36, 0.8));
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 0% 0%, rgba(255, 77, 77, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #FFFFFF, #E2E8F0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pull-ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.btn-primary {
+    background: var(--accent-red);
+    color: white;
+    box-shadow: 0 8px 25px rgba(255, 77, 77, 0.3);
+}
+
+.btn-primary:hover {
+    background: var(--accent-red-hover);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(255, 77, 77, 0.4);
+}
+
+/* Training Grid */
+.training-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.training-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.training-card:hover {
+    transform: translateY(-8px);
+    background: rgba(35, 39, 48, 0.8);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.card-icon.flame { background: rgba(255, 77, 77, 0.1); color: var(--accent-red); }
+.card-icon.medical { background: rgba(76, 175, 80, 0.1); color: var(--accent-green); }
+.card-icon.security { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.card-icon.data { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+
+.card-info {
+    flex: 1;
+}
+
+.card-info h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.card-info p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1.5rem;
+}
+
+.training-card:hover .btn-secondary {
+    background: white;
+    color: var(--bg-charcoal);
+}
+
+/* Progress Section */
+.progress-section {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 2rem;
+    backdrop-filter: blur(12px);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    align-items: flex-end;
+}
+
+.progress-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.progress-header span {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.progress-bar-container {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%; /* Will animate to 33.3% for 2/6 */
+    background: linear-gradient(90deg, #4CAF50, #81C784);
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    animation: loadProgress 1.5s cubic-bezier(0.1, 0.8, 0.2, 1) forwards 1s;
+}
+
+@keyframes loadProgress {
+    from { width: 0%; }
+    to { width: 33.33%; }
+}
+
+/* Loading Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(18, 20, 24, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.nav-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.nav-content {
+    text-align: center;
+    transform: scale(0.9);
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+    to { transform: scale(1); }
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-red);
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.nav-content h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.nav-content p {
+    color: var(--text-muted);
+}
+
+/* Entrance Animations */
+.slide-up-1 { animation: slideUpFade 0.6s ease forwards; opacity: 0; transform: translateY(30px); }
+.slide-up-2 { animation: slideUpFade 0.6s ease forwards 0.2s; opacity: 0; transform: translateY(30px); }
+.slide-up-3 { animation: slideUpFade 0.6s ease forwards 0.3s; opacity: 0; transform: translateY(30px); }
+.slide-up-4 { animation: slideUpFade 0.6s ease forwards 0.4s; opacity: 0; transform: translateY(30px); }
+.slide-up-5 { animation: slideUpFade 0.6s ease forwards 0.5s; opacity: 0; transform: translateY(30px); }
+.slide-up-6 { animation: slideUpFade 0.6s ease forwards 0.6s; opacity: 0; transform: translateY(30px); }
+
+@keyframes slideUpFade {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .training-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.25rem;
+    }
+    
+    .header-center {
+        display: none; /* Hide score on mobile to save space, or make it smaller */
+    }
+}

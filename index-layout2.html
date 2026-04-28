@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulse | Layout Variant 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style-layout2.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="layout-wrapper">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-top">
+                <div class="pulse-brand">
+                    <i data-lucide="activity" class="pulse-logo"></i>
+                    <h2>PULSE</h2>
+                </div>
+            </div>
+            
+            <div class="sidebar-center">
+                <div class="sidebar-item active">
+                    <i data-lucide="layout-grid"></i>
+                    <span>Training Modules</span>
+                </div>
+                <div class="sidebar-item">
+                    <i data-lucide="award"></i>
+                    <span>Certifications</span>
+                </div>
+                <div class="sidebar-item">
+                    <i data-lucide="line-chart"></i>
+                    <span>Performance</span>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="safety-score-mini">
+                    <span class="score-label">Score</span>
+                    <span class="score-number">94<span class="percent">%</span></span>
+                </div>
+                <div class="user-avatar">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="User" />
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content (Carousel) -->
+        <main class="main-carousel">
+            <header class="carousel-header">
+                <div>
+                    <h1>Ready for Duty?</h1>
+                    <p>Select a scenario to resume your training operations.</p>
+                </div>
+                <button class="resume-btn" onclick="startModule()">
+                    <i data-lucide="play"></i> Resume Last (K-01)
+                </button>
+            </header>
+
+            <div class="horizontal-scroll">
+                
+                <div class="module-card fade-in" style="--delay: 0.1s; background-image: linear-gradient(to top, rgba(10,12,16,0.9), transparent), url('https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=600&auto=format&fit=crop');">
+                    <div class="card-content">
+                        <div class="icon-ring"><i data-lucide="flame"></i></div>
+                        <h2>Kitchen Safety</h2>
+                        <p>Grease fires & hazard management.</p>
+                        <button onclick="startModule()">Start Mission</button>
+                    </div>
+                </div>
+
+                <div class="module-card fade-in" style="--delay: 0.2s; background-image: linear-gradient(to top, rgba(10,12,16,0.9), transparent), url('https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=600&auto=format&fit=crop');">
+                    <div class="card-content">
+                        <div class="icon-ring green"><i data-lucide="cross"></i></div>
+                        <h2>Medical Emergency</h2>
+                        <p>First aid & rapid response procedures.</p>
+                        <button onclick="startModule()">Start Mission</button>
+                    </div>
+                </div>
+
+                <div class="module-card fade-in" style="--delay: 0.3s; background-image: linear-gradient(to top, rgba(10,12,16,0.9), transparent), url('https://images.unsplash.com/photo-1541888062959-1ce5d2294157?q=80&w=600&auto=format&fit=crop');">
+                    <div class="card-content">
+                        <div class="icon-ring blue"><i data-lucide="shield-alert"></i></div>
+                        <h2>Lobby Security</h2>
+                        <p>De-escalation and active threat scenarios.</p>
+                        <button onclick="startModule()">Start Mission</button>
+                    </div>
+                </div>
+
+                <div class="module-card fade-in" style="--delay: 0.4s; background-image: linear-gradient(to top, rgba(10,12,16,0.9), transparent), url('https://images.unsplash.com/photo-1563206767-5b18f218e8de?q=80&w=600&auto=format&fit=crop');">
+                    <div class="card-content">
+                        <div class="icon-ring purple"><i data-lucide="lock"></i></div>
+                        <h2>Data Protection</h2>
+                        <p>Guest privacy and digital security.</p>
+                        <button onclick="startModule()">Start Mission</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert Overlay -->
+    <div id="loading-overlay" class="overlay hidden">
+        <div class="overlay-box">
+            <i data-lucide="loader" class="spinner"></i>
+            <h2>Loading Module...</h2>
+            <p>Initializing VR Environment...</p>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        function startModule() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.remove('hidden');
+            setTimeout(() => { overlay.classList.add('hidden'); }, 2000);
+        }
+    </script>
+</body>
+</html>
