@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { getTopStaffMembers } from '../services/leaderboard';
 import type { LeaderboardEntry } from '../services/leaderboard';
-import { Activity, LayoutGrid, Award, LineChart, Play, Loader, Flame, Cross, ShieldAlert, LogOut, X, Trophy, Sun, Moon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { getProgress } from '../services/progress';
+import type { UserProgress } from '../services/progress';
+import { Activity, LayoutGrid, Award, LineChart, Play, Loader, Flame, Cross, ShieldAlert, LogOut, X, Trophy, Sun, Moon, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { MODULES } from '../data/mockScenarios';
 
 // ==========================================
@@ -154,6 +156,17 @@ export default function Home() {
     const [showLeaderboard, setShowLeaderboard] = useState(false);
     const [leaders, setLeaders] = useState<LeaderboardEntry[]>([]);
     const [loadingLeaders, setLoadingLeaders] = useState(true);
+
+    // Profile State
+    const [showProfile, setShowProfile] = useState(false);
+    const [progress, setProgress] = useState<UserProgress | null>(null);
+
+    const handleOpenProfile = () => {
+        if (user) {
+            setProgress(getProgress(user.uid));
+        }
+        setShowProfile(true);
+    };
 
     const startModule = (id: string) => {
         setLoadingModule(true);
@@ -334,9 +347,9 @@ export default function Home() {
                         <LayoutGrid size={20} />
                         {isSidebarOpen && <span>Training Modules</span>}
                     </div>
-                    <div className="sidebar-item">
+                    <div className="sidebar-item" onClick={handleOpenProfile}>
                         <Award size={20} />
-                        {isSidebarOpen && <span>Certifications</span>}
+                        {isSidebarOpen && <span>My Profile</span>}
                     </div>
                     <div className="sidebar-item" onClick={handleOpenLeaderboard}>
                         <LineChart size={20} />
@@ -356,10 +369,12 @@ export default function Home() {
                     <div className="sidebar-bottom">
                         <div className="safety-score-mini">
                             <span className="score-label">Logged In As</span>
-                            <span className="score-number" style={{ fontSize: '0.8rem', color: '#FFF' }}>{user?.email}</span>
+                            <span className="score-number" style={{ fontSize: '0.8rem', color: '#FFF' }}>{user?.displayName || user?.email}</span>
                         </div>
-                        <div className="user-avatar" title={user?.email || "User"}>
-                            <img src="https://i.pravatar.cc/100?img=12" alt="User" />
+                        <div className="user-avatar" title={user?.email || 'User'} onClick={handleOpenProfile} style={{ cursor: 'pointer' }}>
+                            <div style={{ width: 44, height: 44, borderRadius: '50%', border: '2px solid var(--accent-primary)', background: 'rgba(59,130,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)', fontWeight: 800, fontSize: '1.1rem' }}>
+                                {(user?.displayName || user?.email || 'U')[0].toUpperCase()}
+                            </div>
                         </div>
                     </div>
                 )}
@@ -478,6 +493,76 @@ export default function Home() {
                                 {leaders.length === 0 && <p style={{ color: '#8E9BAE' }}>No data available yet.</p>}
                             </ul>
                         )}
+                    </div>
+                </div>
+            )}
+
+            {/* Profile Modal */}
+            {showProfile && (
+                <div className="overlay">
+                    <div className="overlay-box" style={{ background: '#12151B', padding: '2rem', borderRadius: '16px', border: '1px solid var(--accent-primary)', width: '440px', maxWidth: '90vw', textAlign: 'left', position: 'relative', maxHeight: '85vh', overflowY: 'auto' }}>
+                        <X size={24} style={{ position: 'absolute', top: '15px', right: '15px', cursor: 'pointer', color: '#8E9BAE' }} onClick={() => setShowProfile(false)} />
+                        
+                        {/* Profile Header */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                            <div style={{ width: 56, height: 56, borderRadius: '50%', border: '2px solid var(--accent-primary)', background: 'rgba(59,130,246,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-primary)', fontWeight: 800, fontSize: '1.5rem', flexShrink: 0 }}>
+                                {(user?.displayName || user?.email || 'U')[0].toUpperCase()}
+                            </div>
+                            <div>
+                                <h2 style={{ color: '#FFF', fontSize: '1.2rem', fontWeight: 700, margin: 0 }}>{user?.displayName || 'User'}</h2>
+                                <p style={{ color: '#8E9BAE', fontSize: '0.8rem', margin: '0.2rem 0' }}>{user?.email}</p>
+                                <span style={{ display: 'inline-block', padding: '0.2rem 0.6rem', borderRadius: '6px', fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', ...(user?.role === 'manager' ? { background: 'rgba(245,158,11,0.15)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.3)' } : { background: 'rgba(59,130,246,0.15)', color: '#3B82F6', border: '1px solid rgba(59,130,246,0.3)' }) }}>
+                                    {user?.role || 'trainee'}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Stats Cards */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                            <div style={{ background: '#1A1E26', borderRadius: '12px', padding: '1rem', textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <p style={{ color: '#8E9BAE', fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.3rem' }}>Total Score</p>
+                                <p style={{ color: '#22C55E', fontSize: '1.5rem', fontWeight: 800 }}>{progress?.totalScore || 0}</p>
+                            </div>
+                            <div style={{ background: '#1A1E26', borderRadius: '12px', padding: '1rem', textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <p style={{ color: '#8E9BAE', fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.3rem' }}>Completed</p>
+                                <p style={{ color: '#3B82F6', fontSize: '1.5rem', fontWeight: 800 }}>{progress?.modulesCompleted || 0}</p>
+                            </div>
+                            <div style={{ background: '#1A1E26', borderRadius: '12px', padding: '1rem', textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <p style={{ color: '#8E9BAE', fontSize: '0.6rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.3rem' }}>Pass Rate</p>
+                                <p style={{ color: '#F59E0B', fontSize: '1.5rem', fontWeight: 800 }}>
+                                    {progress && progress.modulesCompleted > 0 ? Math.round((progress.modulesPassed / progress.modulesCompleted) * 100) : 0}%
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Module History */}
+                        <div>
+                            <p style={{ color: '#8E9BAE', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.75rem' }}>Training History</p>
+                            {progress && progress.results.length > 0 ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    {progress.results.slice().reverse().map((r, i) => (
+                                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', background: '#1A1E26', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                            {r.result === 'SUCCESS' ? (
+                                                <CheckCircle size={18} color="#22C55E" />
+                                            ) : (
+                                                <XCircle size={18} color="#EF4444" />
+                                            )}
+                                            <div style={{ flex: 1 }}>
+                                                <p style={{ color: '#FFF', fontSize: '0.85rem', fontWeight: 600, margin: 0 }}>{r.moduleName}</p>
+                                                <p style={{ color: '#8E9BAE', fontSize: '0.65rem', margin: 0 }}>
+                                                    {new Date(r.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                </p>
+                                            </div>
+                                            <span style={{ color: r.result === 'SUCCESS' ? '#22C55E' : '#EF4444', fontWeight: 800, fontSize: '0.9rem' }}>
+                                                {r.score} pts
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <p style={{ color: '#8E9BAE', fontSize: '0.85rem', textAlign: 'center', padding: '2rem 0' }}>No training sessions completed yet. Start a module to begin tracking your progress!</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

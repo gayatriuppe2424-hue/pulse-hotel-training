@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CRISIS_DATASET } from '../data/mockScenarios';
+import { useAuth } from '../contexts/AuthContext';
+import { saveModuleResult } from '../services/progress';
 
 export const GameScreen: React.FC = () => {
   const { scenarioId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [currentId, setCurrentId] = useState(scenarioId || CRISIS_DATASET[0].id);
   const [points, setPoints] = useState(0);
@@ -79,9 +82,21 @@ export const GameScreen: React.FC = () => {
   };
 
   const processAction = (nextId: string, earnedPoints: number) => {
-    setPoints((prev) => prev + earnedPoints);
+    const newPoints = points + earnedPoints;
+    setPoints(newPoints);
     if (nextId === 'SUCCESS' || nextId === 'GAMEOVER') {
       setGameResult(nextId);
+      // Save progress
+      if (user && scenario) {
+        const rootId = scenarioId?.split('-')[0] + '-01';
+        saveModuleResult(user.uid, {
+          moduleId: rootId || scenario.id,
+          moduleName: scenario.category,
+          score: newPoints,
+          result: nextId,
+          completedAt: new Date().toISOString(),
+        });
+      }
     } else {
       setCurrentId(nextId);
       navigate(`/game/${nextId}`, { replace: true });

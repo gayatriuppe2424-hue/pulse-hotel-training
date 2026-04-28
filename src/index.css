@@ -504,10 +504,18 @@ body {
         font-size: 0.8rem;
     }
 
-    /* Overlay */
+    /* Overlay — must be above sticky sidebar */
+    .overlay {
+        z-index: 200;
+        padding: 1rem;
+        overflow-y: auto;
+    }
+
     .overlay-box {
-        margin: 0 1rem;
-        max-width: 90vw;
+        margin: 0;
+        max-width: 95vw;
+        max-height: 90vh;
+        overflow-y: auto;
     }
 }
 
