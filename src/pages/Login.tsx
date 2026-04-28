@@ -117,6 +117,7 @@ const styles: Record<string, React.CSSProperties> = {
         width: '100%',
         maxWidth: '400px',
         padding: '3rem 2rem',
+        margin: '0 1rem',
         backgroundColor: '#12151B',
         border: '1px solid rgba(255,255,255,0.05)',
         borderRadius: '24px',

@@ -137,48 +137,48 @@ export const GameScreen: React.FC = () => {
 
   // ── Main Game Screen ────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-screen w-full bg-[#0a0e17] text-slate-50 font-sans overflow-hidden">
+    <div className="flex flex-col h-screen w-full bg-[#0a0e17] text-slate-50 font-sans overflow-y-auto md:overflow-hidden">
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-6 py-0 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shrink-0 h-[64px]">
+      <header className="sticky top-0 z-50 flex items-center justify-between px-3 sm:px-6 py-0 bg-slate-950/90 backdrop-blur-md border-b border-slate-800 shrink-0 h-[56px] sm:h-[64px]">
         <button
           onClick={handleBackToHome}
-          className="text-slate-400 hover:text-white transition-colors text-sm font-semibold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-800"
+          className="text-slate-400 hover:text-white transition-colors text-sm font-semibold flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 rounded-lg hover:bg-slate-800"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          Back to Home
+          <span className="hidden sm:inline">Back to Home</span>
         </button>
 
         {/* Centre title */}
         <div className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <span className="text-white font-black text-base tracking-tight">{scenario.category}</span>
+          <span className="text-white font-black text-xs sm:text-base tracking-tight">{scenario.category}</span>
           <div className="flex items-center gap-1.5 mt-0.5">
             <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></div>
-            <span className="text-red-400 text-[10px] font-bold uppercase tracking-widest">Crisis Active</span>
+            <span className="text-red-400 text-[8px] sm:text-[10px] font-bold uppercase tracking-widest">Crisis Active</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className={`flex items-center gap-3 px-4 py-2 rounded-lg border ${timeLeft <= 10 ? 'bg-red-950/40 border-red-900/50' : 'bg-slate-900 border-slate-700'}`}>
+        <div className="flex items-center gap-1.5 sm:gap-4">
+          <div className={`flex items-center gap-1.5 sm:gap-3 px-2 sm:px-4 py-1.5 sm:py-2 rounded-lg border ${timeLeft <= 10 ? 'bg-red-950/40 border-red-900/50' : 'bg-slate-900 border-slate-700'}`}>
             <span className={`text-xs font-bold uppercase tracking-widest hidden sm:inline-block ${timeLeft <= 10 ? 'text-red-400' : 'text-slate-400'}`}>Time</span>
-            <span className={`text-xl font-black tabular-nums ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'text-slate-200'}`}>
+            <span className={`text-base sm:text-xl font-black tabular-nums ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'text-slate-200'}`}>
               00:{timeLeft.toString().padStart(2, '0')}
             </span>
           </div>
-          <div className="flex items-center gap-3 px-4 py-2 bg-slate-900 rounded-lg border border-slate-700">
+          <div className="flex items-center gap-1.5 sm:gap-3 px-2 sm:px-4 py-1.5 sm:py-2 bg-slate-900 rounded-lg border border-slate-700">
             <span className="text-xs text-slate-400 font-bold uppercase tracking-widest hidden sm:inline-block">Safety Score</span>
-            <span className="text-xl font-black tabular-nums text-amber-400">{points}</span>
+            <span className="text-base sm:text-xl font-black tabular-nums text-amber-400">{points}</span>
           </div>
         </div>
       </header>
 
       {/* ── 3-PANEL BODY ── */}
-      <div className="flex-1 flex min-h-0 gap-4 p-5">
+      <div className="flex-1 flex flex-col md:flex-row min-h-0 gap-2 sm:gap-4 p-2 sm:p-5">
 
         {/* ── LEFT: Monitoring Area ── */}
-        <div className="relative flex-1 bg-[#0d1117] rounded-xl border border-slate-800 flex flex-col overflow-hidden">
+        <div className="relative flex-1 md:flex-1 min-h-[200px] sm:min-h-[280px] bg-[#0d1117] rounded-xl border border-slate-800 flex flex-col overflow-hidden">
           {/* Panel header */}
           <div className="flex items-center gap-2 px-4 py-2.5 border-b border-slate-800/70 bg-slate-950/50 shrink-0">
             <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,7 +243,7 @@ export const GameScreen: React.FC = () => {
         </div>
 
         {/* ── RIGHT COLUMN ── */}
-        <div className="w-[680px] flex flex-col gap-4 shrink-0">
+        <div className="w-full md:w-[680px] flex flex-col gap-2 sm:gap-4 shrink-0">
 
           {/* ── TOP-RIGHT: Active Emergencies ── */}
           <div className="flex-1 bg-[#0d1117] rounded-xl border border-slate-800 flex flex-col overflow-hidden">
@@ -304,7 +304,7 @@ export const GameScreen: React.FC = () => {
           </div>
 
           {/* ── BOTTOM-RIGHT: System Logs ── */}
-          <div className="h-[190px] bg-[#0d1117] rounded-xl border border-slate-800 flex flex-col overflow-hidden shrink-0">
+          <div className="hidden sm:flex h-[190px] bg-[#0d1117] rounded-xl border border-slate-800 flex-col overflow-hidden shrink-0">
             {/* Panel header */}
             <div className="flex items-center gap-2 px-4 py-2.5 border-b border-slate-800/70 bg-slate-950/50 shrink-0">
               <svg className="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

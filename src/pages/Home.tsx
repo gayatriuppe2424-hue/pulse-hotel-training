@@ -224,12 +224,7 @@ export default function Home() {
     // ======== LAYOUT 2: 3x2 Grid (compact tiles) ========
     const renderLayout2 = () => (
         <div 
-            style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(3, 1fr)', 
-                gap: '1.5rem',
-                width: '100%'
-            }}
+            className="module-grid"
             onMouseEnter={() => setIsHoveringCards(true)}
             onMouseLeave={() => setIsHoveringCards(false)}
         >
@@ -381,12 +376,14 @@ export default function Home() {
                     background: 'var(--hud-bg)',
                     backdropFilter: 'blur(16px)',
                     WebkitBackdropFilter: 'blur(16px)',
-                    padding: '1.5rem 2rem',
-                    marginBottom: '2rem',
+                    padding: '1rem 1.25rem',
+                    marginBottom: '1.5rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    minHeight: '120px',
+                    flexWrap: 'wrap' as const,
+                    gap: '0.75rem',
+                    minHeight: '80px',
                     boxShadow: '0 8px 32px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05)',
                     transition: 'background 0.4s, border-color 0.4s'
                 }}>

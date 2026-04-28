@@ -346,3 +346,182 @@ body {
 .overlay-box { text-align: center; }
 .spinner { width: 40px; height: 40px; color: var(--accent-red); margin: 0 auto 1rem; animation: spin 1s infinite linear; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Module Grid */
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN — TABLET & MOBILE
+   ======================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .main-carousel {
+        padding: 2rem;
+    }
+
+    .module-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    body {
+        overflow: auto;
+    }
+
+    .layout-wrapper {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* Sidebar → Top Navbar */
+    .sidebar {
+        width: 100% !important;
+        flex-direction: row;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        gap: 0.5rem;
+    }
+
+    .sidebar .sidebar-top {
+        margin: 0;
+    }
+
+    .sidebar .pulse-brand {
+        margin-bottom: 0;
+        gap: 0.4rem;
+    }
+
+    .sidebar .pulse-brand h2 {
+        font-size: 1rem;
+        opacity: 1 !important;
+        width: auto !important;
+    }
+
+    .sidebar-toggle {
+        display: none;
+    }
+
+    .sidebar-center {
+        flex-direction: row;
+        flex: 1;
+        justify-content: flex-end;
+        gap: 0.25rem;
+    }
+
+    .sidebar-item {
+        padding: 0.5rem;
+        border-radius: 8px;
+        gap: 0;
+    }
+
+    .sidebar-item span {
+        display: none;
+    }
+
+    .sidebar-item svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .theme-toggle {
+        width: auto;
+        padding: 0.4rem;
+        margin-bottom: 0;
+    }
+
+    .theme-toggle span {
+        display: none;
+    }
+
+    /* Main Content */
+    .main-carousel {
+        padding: 1rem;
+        overflow-x: hidden;
+    }
+
+    .main-carousel::before {
+        display: none;
+    }
+
+    .carousel-header h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Module Cards Grid → Single Column */
+    .module-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .module-card {
+        min-width: unset !important;
+        width: 100% !important;
+        height: 220px !important;
+        border-radius: 16px;
+        padding: 1rem !important;
+    }
+
+    .module-card:hover {
+        transform: none;
+    }
+
+    .card-content h2 {
+        font-size: 1rem;
+    }
+
+    .card-content p {
+        font-size: 0.8rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .horizontal-scroll {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Resume / Quick Start button */
+    .resume-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.8rem;
+    }
+
+    /* Overlay */
+    .overlay-box {
+        margin: 0 1rem;
+        max-width: 90vw;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .sidebar .pulse-brand h2 {
+        display: none;
+    }
+    
+    .main-carousel {
+        padding: 0.75rem;
+    }
+
+    .module-card {
+        height: 200px !important;
+    }
+}
